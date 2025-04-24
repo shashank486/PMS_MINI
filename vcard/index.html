@@ -4,374 +4,268 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Patient Card Generator</title>
-    <!-- <link rel="stylesheet" type="text/css" href="styles.css"> -->
+    <title>User Registration Form</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        /* General body styling */
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 600px;
-            margin: auto;
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        label {
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        input[type="text"],
-        input[type="number"],
-        input[type="tel"],
-        textarea {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 3px;
-            box-sizing: border-box;
-        }
-
-        button {
-            background-color: #0093f5;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 3px;
-            cursor: pointer;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #63a4ff, #c1c8e4);
+            /* Gradient background */
+            margin: 100px;
+            padding: 0;
             display: flex;
             flex-direction: column;
+            /* Stack logo and container vertically */
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #333;
+        }
+
+        /* Logo styling */
+        #logo {
+            margin-bottom: 30px;
+            /* Increased space below the logo */
+            width: 150px;
+            /* Adjust the size of the logo */
+            height: auto;
+            max-width: 100%;
+            border-radius: 50%;
+            /* Circular shape for logo */
+            animation: fadeIn 1s ease-in-out;
+            /* Subtle fade-in animation */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            /* Soft shadow for logo */
+        }
+
+        /* Keyframe animation for logo fade-in */
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Form container styling */
+        .form-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            /* Larger shadow for depth */
+            width: 100%;
+            max-width: 400px;
+            /* Improved max-width for larger screens */
+            transition: all 0.3s ease;
+            /* Smooth transition for hover */
+        }
+
+        .form-container:hover {
+            box-shadow: 0 6px 30px rgba(0, 0, 0, 0.2);
+            /* Hover effect with deeper shadow */
+        }
+
+        /* Header styling */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            /* Increased space below header */
+        }
+
+        .header span {
+            font-weight: bold;
+            font-size: 16px;
+            /* Increased font size */
+            color: #333;
+            /* Improved contrast */
+        }
+
+        .header a {
+            color: #007bff;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.2s ease;
+            /* Smooth color change on hover */
+        }
+
+        .header a:hover {
+            color: #0056b3;
+            /* Darker shade on hover */
+        }
+
+        /* Form group styling */
+        .form-group {
+            margin-bottom: 20px;
+            /* Increased spacing for better readability */
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            margin-bottom: 8px;
+            /* More space below labels */
+            color: #333;
+            /* Improved contrast */
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            /* More rounded corners */
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: #00c4ff;
+            /* Focus state with blue border */
+            outline: none;
+        }
+
+        /* Mobile input styling */
+        .mobile-input {
+            display: flex;
+        }
+
+        .mobile-input select {
+            width: 40%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px 0 0 8px;
+            font-size: 14px;
+        }
+
+        .mobile-input input {
+            width: 60%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 0 8px 8px 0;
+            border-left: none;
+            font-size: 14px;
+        }
+
+        /* Checkbox styling */
+        .form-group.checkbox {
+            display: flex;
             align-items: center;
         }
 
-        button:hover {
-            background-color: #1f5a3c;
+        .form-group.checkbox input {
+            margin-right: 10px;
         }
 
-        .card {
-            margin-top: 20px;
-            padding: 20px;
-            background-color: #e7f3fe;
-            border: 1px solid #b3d7ff;
-            border-radius: 8px;
-            text-align: center;
-            position: relative;
-            /* height: 100px; */
+        .form-group.checkbox label {
+            font-size: 12px;
+            color: #666;
         }
 
-        .card img {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            width: 50px;
-            /* Adjust size as needed */
-            height: 50px;
-            /* Adjust size as needed */
+        /* Paragraph and link styling */
+        p {
+            font-size: 12px;
+            color: #666;
+            margin: 20px 0;
         }
 
-        .card h2,
-        .card p {
-            margin: 10px 0;
+        p a {
+            color: #007bff;
+            text-decoration: none;
+            transition: color 0.2s ease;
         }
 
-
-        /* for QRcode  */
-        #imgBox {
-            height: 400px;
-            border-radius: 5px;
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 1s;
+        p a:hover {
+            color: #0056b3;
+            /* Darker shade on hover */
         }
 
-        #imgBox img {
+        /* Button styling */
+        button {
             width: 100%;
-            padding: 10px;
-            /* display:flex;
-    bottom: -20px; */
+            padding: 14px;
+            background-color: #00c4ff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            /* Rounded button */
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            /* Smooth hover effect */
         }
 
-        #img.show-img {
-            max-height: 300px;
-            margin: 10px auto;
-            border: 1px solid #d1d1d1;
+        button:hover {
+            background-color: #009ccf;
+            /* Darker shade on hover */
         }
     </style>
 </head>
 
 <body>
-    <div class="container">
-        <h1>E-Pass</h1>
-        <br><br>
-        <form id="cardForm" method="post" action="/submit">
-            <label for="patientName">Patient Name:</label>
-            <input type="text" id="patientName" required name="patientName">
-            <br>
-            <label for="age">Age:</label>
-            <input type="number" id="age" required name="age">
-            <br>
-            <label for="phone">Phone:</label>
-            <input type="tel" id="phone" required name="phone">
-            <br>
-            <label for="doctor">Doctor:</label>
-            <!-- <input type="text" id="doctor" class="docname" required name="doctor"> -->
-            <span id="doctor" class="docname"></span>
-            <input type="hidden" id="doctorHidden" name="doctor">
 
-            <br>
-            <!-- <label for="doctorPhone">Dr.Phone:</label>
-            <input type="tel" id="doctorPhone" required name="doctorPhone">
-            <br> -->
-            <button type="submit" id="submit">Generate Card</button>
-        </form>
-        <div id="card" class="card">
+    <img src="https://res.cloudinary.com/dviuu2srn/image/upload/v1732110862/logo_PMS_iwjig9.webp" id="logo" alt="">
 
+    <div class="form-container">
+        <div class="header">
+            <span>Consult 125,000+ doctors</span>
+            <!-- <a href="/auth/google">SignUp with Google</a> -->
+            <a href="/Docregister">Patient</a>?</a>
         </div>
-        <button id="downloadBtn" style="display: none;">Download Card</button>
-    </div>
-    <canvas id="canvas" style="display: none;"></canvas>
-    <!-- <script src="script.js"></script> -->
-    <!-- <script src="server.js"></script> -->
+        <form action="/register" method="POST">
+            <input type="hidden" name="role" value="patient">
 
-
-    <script>
-
-
-// window.location.href = "PMSreg.html";
-
-
-
-
-
-
-        // Function to get query parameters by name
-        function getQueryParam(param) {
-            const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get(param);
-        }
-        var doctorName = getQueryParam('doctorName');
-        console.log(doctorName);
-
-        // Find the element with the class 'docname' and set its text content
-        // var doctorNameElement = document.getElementsByClassName('docname')[0];
-
-        // if (doctorNameElement) {
-        //     doctorNameElement.textContent = `${doctorName}`;
-        // }
-
-        var elements = document.getElementsByClassName('docname');
-        for (let element of elements) {
-            element.textContent = `${doctorName}`;
-        }
-
-        const doctorElement = document.getElementById('doctor');
-        const hiddenDoctorInput = document.getElementById('doctorHidden');
-        doctorElement.textContent = doctorName;
-        hiddenDoctorInput.value = doctorName;
-
-
-
-
-        document.getElementById('cardForm').onsubmit = async function (event) {
-            event.preventDefault(); // Prevent default form submission  
-
-            const formData = new FormData(this);
-            const data = Object.fromEntries(formData.entries()); // Convert FormData to object  
-
-            try {
-                const response = await fetch('http://localhost:5503/submit', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(data),
-                });
-
-                const result = await response.json();
-                alert(result.message); // Alert success message  
-
-                // Optionally, handle additional UI logic here (e.g., hide form, show card, etc.)  
-
-            } catch (error) {
-                console.error('Error:', error);
-                alert('Failed to generate card.');
-            }
-        };
-
-
-
-
-
-
-
-        //modified code
-
-        // QR Code Generator Function
-        function QRgenerator(data) {
-            return `https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(data)}&size=150x150`;
-        }
-
-        // Handle Form Submission
-        document.getElementById('cardForm').addEventListener('submit', function (event) {
-            event.preventDefault();
-
-            const patientName = document.getElementById('patientName').value;
-            const age = document.getElementById('age').value;
-            const phone = document.getElementById('phone').value;
-            // const doctor = document.getElementsByClassName('docname')[0]?.textContent || null;
-            // const doctorElement = document.getElementsByClassName('docname')[0]; // Get the first element with class 'docname'  
-            // const doctor = doctorElement ? doctorElement.textContent : null; // Assign its textContent or null if it doesn't exist
-           
-           
-
-            const qrData = `patientName: ${patientName}, age: ${age}, phone: ${phone}, doctor:${doctorName}`;
-
-            const card = document.getElementById('card');
-            card.innerHTML = `
-                <img id="logo" src="https://res.cloudinary.com/dviuu2srn/image/upload/v1732110862/logo_PMS_iwjig9.webp" alt="Company Logo">
-                <h2>${patientName}</h2>
-                <p>age: ${age}</p>
-                <p>phone: ${phone}</p>
-                <p>doctor: ${doctorName}</p>
-                
-                <div class="imgBox">
-                    <img src="${QRgenerator(qrData)}" id="qrImg" alt="QR Code">
+            <div class="form-group">
+                <label for="fullName">Full Name</label>
+                <input type="text" id="fullName" placeholder="Full Name" name="fullname" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="Email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="mobile">Mobile Number</label>
+                <div class="mobile-input">
+                    <select name="countryCode">
+                        <option value="+91">+91 (IND)</option>
+                    </select>
+                    <input type="tel" id="mobile" placeholder="Mobile Number" name="mobileno" required>
                 </div>
-            `;
-
-            // const style = document.createElement('style');
-            // style.innerHTML = `
-            //     #logo {
-            //         border: 2px solid black;
-            //         border-radius: 38px;
-            //         width: 80px;
-            //         height: 80px;
-            //     }
-            //     .imgBox {
-            //         margin-top: 10px;
-            //     }
-            //     #qrImg {
-            //         border: 1px solid #ccc;
-            //         border-radius: 5px;
-            //         width: 130px;
-            //         height: 130px;
-            //     }
-            // `;
-            const style = document.createElement('style');
-            style.innerHTML = `
-            #logo
-            {
-                border:2px solid black;
-                border-radius: 38px;
-            }
-            .imgBox {
-                height:130px;
-                width:90%;
-                margin-top: 10px;
-                position: absolute;
-                bottom=-10px;/* Center align the QR code */
-            }
-            #qrImg {
-                border: 1px solid #ccc;
-                border-radius: 5px; 
-                position:absolute;
-                left:90px;
-            }
-            .imgBox img
-            {
-                width: auto;
-                height: 130px;
-            }
-
-                .card
-                {
-                    height:300px;
-                    width:300px;
+            </div>
+            <div class="form-group">
+                <label for="password">Create Password</label>
+                <input type="password" id="password" placeholder="Password" name="password" required>
+            </div>
+            <p>By signing up, I agree to <a href="#">terms</a></p>
+            <button type="submit" class="navibtn" data-url="home.html">SignUp</button>
+        </form>
+        <hr class="hline">
+        <a href="/auth/google" aria-label="Sign in with Google">
+            <img src="https://res.cloudinary.com/dviuu2srn/image/upload/v1735138835/download_smgy0j.png" alt="google" style="width: 30px; height: 30px; position:relative; left:125px">
+        </a>
+    </div>
+    <script>
+        document.getElementById('.navibtn').forEach(function (element) {
+            element.addEventListener('click', function () {
+                // Get the URL from the data attribute
+                var targetUrl = this.getAttribute('data-url');
+                if (targetUrl) {
+                    // Redirect to the target URL
+                    window.location.href = targetUrl;
                 }
-            `;
-            document.head.appendChild(style);
-
-            document.getElementById('downloadBtn').style.display = 'block';
+            });
         });
-
-        // Handle Card Download
-        document.getElementById('downloadBtn').addEventListener('click', function () {
-            const canvas = document.getElementById('canvas');
-            const ctx = canvas.getContext('2d');
-
-            // Set Canvas Dimensions
-            canvas.width = 400;
-            canvas.height = 500;
-
-            // Draw Background
-            ctx.fillStyle = '#e7f3fe';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            // Add Logo
-            const logo = new Image();
-            logo.crossOrigin = "anonymous";
-            logo.src = "https://res.cloudinary.com/dviuu2srn/image/upload/v1732110862/logo_PMS_iwjig9.webp";
-
-            logo.onload = function () {
-                ctx.drawImage(logo, 10, 10, 50, 50);
-
-                // Add Text
-                const patientName = document.getElementById('patientName').value;
-                const age = document.getElementById('age').value;
-                const phone = document.getElementById('phone').value;
-                // const doctor = document.getElementsByClassName('docname')[0]?.textContent || null;
-                // const doctorPhone = document.getElementById('doctorPhone').value;
-
-                ctx.fillStyle = '#000';
-                ctx.font = 'bold 20px Arial';
-                ctx.textAlign = 'center';
-
-                const textYStart = 100;
-                const textSpacing = 30;
-
-                ctx.fillText(`patientName: ${patientName}`, canvas.width / 2, textYStart);
-                ctx.font = '20px Arial';
-                ctx.fillText(`age: ${age}`, canvas.width / 2, textYStart + textSpacing);
-                ctx.fillText(`phone: ${phone}`, canvas.width / 2, textYStart + textSpacing * 2);
-                ctx.fillText(`doctor: ${doctorName}`, canvas.width / 2, textYStart + textSpacing * 3);
-                // ctx.fillText(`Doctor Phone: ${doctorPhone}`, canvas.width / 2, textYStart + textSpacing * 4);
-
-                // Add QR Code
-                const qrcode = new Image();
-                qrcode.crossOrigin = "anonymous";
-                const qrData = `patientName: ${patientName}, age: ${age}, phone: ${phone}, doctor:${doctorName}`;
-                qrcode.src = QRgenerator(qrData);
-
-                qrcode.onload = function () {
-                    ctx.drawImage(qrcode, canvas.width / 2 - 75, textYStart + textSpacing * 6, 150, 150);
-
-                    // Draw QR code
-                    // const qrCodeX = 150; // X position for QR code
-                    // const qrCodeY = 250; // Align QR code with the first line of text
-                    // ctx.drawImage(qrcode, qrCodeX, qrCodeY, 100, 100);
-                    // ctx.drawImage(qrcode, 250, 30, 100, 100);
-
-                    // Download the Canvas as an Image
-                    const link = document.createElement('a');
-                    link.download = 'patient_card.png';
-                    link.href = canvas.toDataURL();
-                    link.click();
-                };
-            };
-        });
-
-
     </script>
-    <!-- <script src="server.js"></script> -->
-    <script src="script.js"></script>
+    <script src="server.js"></script>
 </body>
 
 </html>
