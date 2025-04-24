@@ -151,8 +151,8 @@ app.get('/404', (req, res) => {
 
 });
 
-app.get('/index', (req, res) => {
-    res.sendFile(path.join(__dirname, '/index.html'));
+app.get('/vcard', (req, res) => {
+    res.sendFile(path.join(__dirname, '/vcard.html'));
 });
 
 app.get('/Docprofile', (req, res) => {
