@@ -1,0 +1,10 @@
+
+{
+  "redirects": [
+    {
+      "source": "/",
+      "destination": "/vcard/Docregister.html",
+      "permanent": true
+    }
+  ]
+}
