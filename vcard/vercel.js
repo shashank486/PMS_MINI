@@ -1,8 +1,9 @@
+
 {
-    "redirects"[
+    "redirects":[
       {
         "source": "/",
-        "destination": "/PMSreg.html",
+        "destination": "/vcard/PMSreg.html",
         "permanent": true
       }
     ]
