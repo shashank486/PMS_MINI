@@ -1,0 +1,799 @@
+<html>
+
+<head>
+    <title>
+        Doctor Search
+    </title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="home.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 10px;
+            padding: 10px;
+            background-color: #f5f5f5;
+
+        }
+
+        .header {
+            background-color: #f8f9fa;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header input[type="text"] {
+            width: 300px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .header .search-bar {
+            display: flex;
+            align-items: center;
+        }
+
+        .header .search-bar input[type="text"] {
+            margin-right: 10px;
+        }
+
+        .header .prime {
+            color: #6c757d;
+        }
+
+        .header .prime a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+
+
+        .content {
+            padding: 20px;
+        }
+
+        .content h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .content p {
+            color: #6c757d;
+            margin-bottom: 20px;
+        }
+
+        .doctor-card {
+            background-color: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .doctor-card img {
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            margin-right: 20px;
+        }
+
+        .doctor-info {
+            flex: 1;
+        }
+
+        .doctor-info h2 {
+            font-size: 18px;
+            color: #007bff;
+            margin: 0;
+        }
+
+        .doctor-info p {
+            margin: 5px 0;
+            color: #6c757d;
+        }
+
+        .doctor-info .rating {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .doctor-info .rating i {
+            color: #28a745;
+            margin-right: 5px;
+        }
+
+        .doctor-info .rating span {
+            color: #28a745;
+            margin-right: 10px;
+        }
+
+        .doctor-info .patient-stories {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .book-button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .location-box {
+            background-color: white;
+            padding: 20px;
+            border-radius: 4px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        .location-box h3 {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .location-box p {
+            color: #6c757d;
+            margin-bottom: 10px;
+        }
+
+        .location-box .location-buttons {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .location-box .location-buttons button {
+            background-color: #f8f9fa;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 5px;
+            cursor: pointer;
+        }
+
+        .location-box .search-location {
+            color: #007bff;
+            text-decoration: none;
+            display: block;
+            margin-top: 10px;
+        }
+
+        .location-box .current-location {
+            background-color: #007bff;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+
+        /* Search box */
+        .header_srh {
+
+            display: flex;
+            /* width: 100%; */
+            /* height: 500px; */
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .header_srh input[type="text"] {
+            width: 200px;
+            /* Equal size for both inputs */
+            padding: 10px;
+            border: none;
+            font-size: 16px;
+            /* margin: 5px; */
+            border-radius: 4px;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+            border-right: none;
+        }
+
+        .header_srh input[type="search"] {
+            width: 400px;
+            /* Equal size for both inputs */
+            padding: 10px;
+            border: none;
+            font-size: 16px;
+            /* margin: 5px; */
+            border-radius: 4px;
+            border-left: none;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .header_srh .location,
+        .search-dropdown {
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .header_srh .location i {
+            margin-right: 5px;
+        }
+
+        .search-dropdown,
+        .location-dropdown {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            width: 400px;
+            display: none;
+            position: absolute;
+            z-index: 1000;
+
+            visibility: visible;
+            /* Ensure visibility when displayed */
+            opacity: 1;
+            /* Fully opaque */
+            transition: opacity 0.2s ease-in-out;
+            /* Smooth transition effect */
+        }
+
+        .search-dropdown {
+            top: 50px;
+            right: 340px;
+            /* Adjusted to be exactly below the search input box */
+        }
+
+        /* .location-dropdown {
+            top: 46.25px;
+            left: 12.5px;
+            width: 220px;
+            display:block;
+        } */
+
+        .search-dropdown h3,
+        .location-dropdown h3 {
+            margin: 0;
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .search-dropdown .popular-buttons,
+        .location-dropdown .popular-buttons {
+            display: flex;
+            padding: 10px 0;
+        }
+
+        .search-dropdown .popular-buttons button,
+        .location-dropdown .popular-buttons button {
+            background-color: #f5f5f5;
+            border: none;
+            border-radius: 20px;
+            padding: 10px 20px;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        .search-dropdown .common-specialities,
+        .location-dropdown .common-specialities {
+            padding: 10px 0;
+        }
+
+        .search-dropdown .common-specialities .speciality,
+        .location-dropdown .common-specialities .speciality {
+            display: flex;
+            justify-content: baseline;
+            align-items: center;
+            padding: 10px 0;
+            margin: 1px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .search-dropdown .common-specialities .speciality i,
+        .location-dropdown .common-specialities .speciality i {
+
+            margin-right: 10px;
+        }
+
+        .search-dropdown .common-specialities .speciality:last-child,
+        .location-dropdown .common-specialities .speciality:last-child {
+            border-bottom: none;
+        }
+
+        .background-illustration {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            background: url('https://placehold.co/2048x300') no-repeat center center;
+            background-size: cover;
+        }
+
+        h3 {
+            color: black;
+        }
+
+        .speciality {
+            color: black;
+            cursor: pointer;
+        }
+
+        .spec {
+            position: relative;
+            right: -10px;
+            font-family: 'Times New Roman', Times, serif;
+        }
+
+
+
+        /* Dropdown for gender */
+        .filters {
+            position: relative;
+            display: flex;
+            /* Use flex to arrange buttons */
+            gap: 10px;
+            /* Space between buttons */
+            width: 100%;
+        }
+
+        .dropbtn {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            /* Blue background for buttons */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+            /* Button hover transition */
+        }
+
+        .dropbtn:hover {
+            background-color: #0056b3;
+            /* Darker blue on hover */
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #1978de;
+            width: 100%;
+            /* Set to 100% width */
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            opacity: 0;
+            /* Start hidden */
+            transition: opacity 0.3s ease, visibility 0s 0.3s;
+            /* Fading effect */
+            visibility: hidden;
+            /* Hide visually */
+            display: flex;
+            /* Use flex to arrange items side by side */
+        }
+
+        .dropgender {
+            margin: 10px;
+            /* Space between dropdowns */
+            position: relative;
+            flex: 1;
+            /* Each dropdown takes equal space */
+        }
+
+        .dropgender h4 {
+            margin: 10px;
+            color: #333;
+            /* Darker text color for headings */
+            font-size: 18px;
+        }
+
+        .dropgender-content {
+            display: none;
+            background-color: #fff;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            /* Start hidden */
+            transition: opacity 0.3s ease, visibility 0s 0.3s;
+            /* Fade in effect */
+            visibility: hidden;
+            /* Hide visually */
+        }
+
+        .dropgender-content a {
+            color: #333;
+            /* Darker link color */
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            /* Block display */
+            transition: background-color 0.3s;
+            /* Smooth background color change */
+        }
+
+        .dropgender-content a:hover {
+            background-color: #f1f1f1;
+            /* Light gray on hover */
+        }
+
+        /* Show dropdowns */
+        .dropgender:hover .dropgender-content {
+            display: block;
+            /* Show dropdown */
+            opacity: 1;
+            /* Fade in */
+            visibility: visible;
+            /* Make visible */
+        }
+
+        .dropdown-content.show {
+            display: flex;
+            /* Show dropdown */
+            opacity: 1;
+            /* Fade in */
+            visibility: visible;
+            /* Make visible */
+            transition: opacity 0.3s ease;
+            /* Animation transition */
+        }
+    </style>
+</head>
+
+<body>
+   
+
+
+    <div class="header_srh">
+        <div class="location" id="location-box">
+            <i class="fas fa-map-marker-alt"></i>
+            <input type="text" id="location-input" placeholder="Bangalore">
+            <!-- <div class="location-dropdown" id="location-dropdown" ></div> -->
+            <div class="location-dropdown" id="location-dropdown"
+                style="top:45.25px; left: 12.5px; width: 220px; display: block;">
+                <h3>Select Location</h3>
+                <div class="common-specialities">
+                    <div class="speciality">
+                        <div><i class="fas fa-map-marker-alt"></i> Bangalore</div>
+                    </div>
+                    <div class="speciality">
+                        <div><i class="fas fa-map-marker-alt"></i> Mumbai</div>
+                    </div>
+                    <div class="speciality">
+                        <div><i class="fas fa-map-marker-alt"></i> Delhi</div>
+                    </div>
+                    <div class="speciality">
+                        <div><i class="fas fa-map-marker-alt"></i> Chennai</div>
+                    </div>
+                    <div class="speciality">
+                        <div><i class="fas fa-map-marker-alt"></i> Kolkata</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <input type="search" id="search-box" placeholder="Search doctors, clinics, hospitals, etc.">
+
+        <!-- <input type="text" placeholder="Search doctors, clinics, hospitals, etc." id="search-box"> -->
+        <div class="search-dropdown" id="dropdown-menu">
+            <h3>Common Specialities</h3>
+            <div class="common-specialities">
+                <div class="speciality fas fa-search">
+                    <div class="spec">Dentist</div>
+                </div>
+                <div class="speciality fas fa-search">
+                    <div class="spec">Gynecologist/Obstetrician</div>
+                </div>
+                <div class="speciality fas fa-search">
+                    <div class="spec">General Physician</div>
+                </div>
+                <div class="speciality fas fa-search">
+                    <div class="spec">Dermatologist</div>
+                </div>
+                <div class="speciality fas fa-search">
+                    <div class="spec">Ear-Nose-Throat (ENT) Specialist</div>
+                </div>
+                <div class="speciality fas fa-search">
+                    <div class="spec">Homoeopath</div>
+                </div>
+                <div class="speciality fas fa-search">
+                    <div class="spec">Ayurveda</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="filters">
+        <button class="dropbtn" onclick="toggleDropdown()">Filters</button>
+        <div class="dropdown-content" id="allFiltersDropdown">
+            <div class="dropgender">
+                <h4>Gender</h4>
+                <button class="dropbtn">Select Gender</button>
+                <div class="dropgender-content">
+                    <a href="#">Male</a>
+                    <a href="#">Female</a>
+                </div>
+            </div>
+            <div class="dropgender">
+                <h4>Experience</h4>
+                <button class="dropbtn">Select Experience</button>
+                <div class="dropgender-content">
+                    <a href="#">5 years</a>
+                    <a href="#">3 years</a>
+                    <a href="#">2 years</a>
+                    <a href="#">7 years</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="content">
+        <h1>
+            Top Doctor
+        </h1>
+        <p>
+            Book appointments with minimum wait-time &amp; verified doctor details
+        </p>
+
+        <div id="doctor-list"></div>
+
+        <!-- <div class="doctor-card">
+            <img alt="Dental and Orthodontic Clinic logo" height="80"
+                src="https://storage.googleapis.com/a1aa/image/fjz0rz4jaTQuNCF4FXvIvUlxDYPVONlETFYab9jY0GodGc6JA.jpg"
+                width="80" />
+            <div class="doctor-info">
+                <h2>
+                    Dental and Orthodontic Clinic
+                </h2>
+                <p>
+                    2 Dentist
+                </p>
+                <p>
+                    22 - 26 years experience
+                </p>
+                <p>
+                    Kalyan Nagar
+                </p>
+                <p>
+                    ₹500 Consultation Fees
+                </p>
+                <div class="rating">
+                    <i class="fas fa-thumbs-up">
+                    </i>
+                    <span>
+                        98%
+                    </span>
+                    <a class="patient-stories" href="#">
+                        1252 Patient Stories
+                    </a>
+                </div>
+            </div>
+            <button class="book-button">
+                Book Clinic Visit
+            </button>
+        </div> -->
+        <!-- <div class="doctor-card">
+            <img alt="Dr. K.A. Mohan photo" height="80"
+                src="https://storage.googleapis.com/a1aa/image/3cWAKyrcMB5SA1MkryayWhkzANyNiy0UXPx0flfadEq8M40TA.jpg"
+                width="80" />
+            <div class="doctor-info">
+                <h2>
+                    Dr. K.A. Mohan
+                </h2>
+                <p>
+                    Dentist
+                </p>
+                <p>
+                    55 years experience overall
+                </p>
+                <p>
+                    Domlur, Bangalore • Dental De Care
+                </p>
+                <p>
+                    ₹500 Consultation fee at clinic
+                </p>
+                <div class="rating">
+                    <i class="fas fa-thumbs-up">
+                    </i>
+                    <span>
+                        96%
+                    </span>
+                    <a class="patient-stories" href="#">
+                        34 Patient Stories
+                    </a>
+                </div>
+            </div>
+        </div> -->
+        <!-- <div class="location-box">
+            <h3>
+                Provide current location to see Dentist near you
+            </h3>
+            <p>
+                You are seeing results from Bangalore. See results near you
+            </p>
+            <div class="location-buttons">
+                <button>
+                    Hsr Layout
+                </button>
+                <button>
+                    Whitefield
+                </button>
+                <button>
+                    Indiranagar
+                </button>
+                <button>
+                    Sarjapur Road
+                </button>
+                <button>
+                    Marathahalli
+                </button>
+            </div>
+            <a class="search-location" href="#">
+                Search Location
+            </a>
+            <button class="current-location">
+                Current Location
+            </button>
+        </div> -->
+    </div>
+
+    <script>
+
+        // Check user authentication status on page load
+        document.addEventListener("DOMContentLoaded", () => {
+            const isAuthenticated = sessionStorage.getItem("authenticated");
+
+            if (!isAuthenticated) {
+                alert("Please login to access this page.");
+                window.location.href = "/login"; // Redirect to login page
+            }
+        });
+
+
+        // Show dropdown for search input
+        document.getElementById('search-box').addEventListener('focus', function () {
+            var searchBox = document.getElementById('search-box');
+            var dropdownMenu = document.getElementById('dropdown-menu');
+            var rect = searchBox.getBoundingClientRect();
+
+            // Adjust position based on the input's position
+            dropdownMenu.style.top = (window.scrollY + rect.bottom) + 'px'; // Absolute top positioning
+            dropdownMenu.style.left = (window.scrollX + rect.left) + 'px';  // Absolute left positioning
+            dropdownMenu.style.width = rect.width + 'px'; // Match width of the search input
+            dropdownMenu.style.display = 'block'; // Ensure the dropdown is visible
+        });
+
+        // Show dropdown for location input
+        document.getElementById('location-input').addEventListener('focus', function () {
+            var locationInput = document.getElementById('location-input');
+            var locationDropdown = document.getElementById('location-dropdown');
+            var rect = locationInput.getBoundingClientRect();
+
+            // Adjust position based on the input's position
+            // locationDropdown.style.top = (window.scrollY + rect.bottom) + 'px'; // Absolute top positioning
+            // locationDropdown.style.left = (window.scrollX + rect.left) + 'px';  // Absolute left positioning
+            // locationDropdown.style.width = rect.width + 'px'; // Match width of the location input
+            // locationDropdown.style.display = 'block'; // Ensure the dropdown is visible
+        });
+
+        // Click handler for selecting a location from the dropdown
+        document.querySelectorAll('.location-dropdown .speciality').forEach(function (element) {
+            element.addEventListener('click', function () {
+                document.getElementById('location-input').value = this.textContent.trim();
+                document.getElementById('location-dropdown').style.display = 'none';
+            });
+        });
+
+        // Hide dropdown when clicking outside
+        document.addEventListener('click', function (event) {
+            var isClickInsideSearch = document.getElementById('search-box').contains(event.target) || document.getElementById('dropdown-menu').contains(event.target);
+            var isClickInsideLocation = document.getElementById('location-input').contains(event.target) || document.getElementById('location-dropdown').contains(event.target);
+
+            if (!isClickInsideSearch) {
+                document.getElementById('dropdown-menu').style.display = 'none';
+            }
+
+            if (!isClickInsideLocation) {
+                document.getElementById('location-dropdown').style.display = 'none';
+            }
+        });
+
+        // Dropdown menu
+
+        function toggleDropdown() {
+            const dropdown = document.getElementById('allFiltersDropdown');
+            dropdown.classList.toggle('show'); // Toggle class for main dropdown animation  
+        }
+
+        function toggleGenderDropdown(event) {
+            event.stopPropagation(); // Prevent event from bubbling up to window click handler  
+            const genderDropdown = event.currentTarget.nextElementSibling;
+            genderDropdown.classList.toggle('show'); // Toggle gender dropdown visibility  
+        }
+
+        function toggleExperienceDropdown(event) {
+            event.stopPropagation(); // Prevent event from bubbling up to window click handler  
+            const experienceDropdown = event.currentTarget.nextElementSibling;
+            experienceDropdown.classList.toggle('show'); // Toggle experience dropdown visibility  
+        }
+
+        window.onclick = function (event) {
+            if (!event.target.closest('.filters')) {
+                const dropdowns = document.querySelectorAll('.dropdown-content');
+                dropdowns.forEach(dropdown => dropdown.classList.remove('show')); // Close all dropdowns  
+            }
+        }
+
+
+        var DocId;
+
+        // Fetch the doctor details from database
+        async function fetchDoctors() {
+            try {
+                const response = await fetch('http://localhost:5503/api/doctors'); // Adjust this URL if needed
+                const doctors = await response.json();
+
+                const doctorList = document.getElementById('doctor-list');
+                doctorList.innerHTML = ''; // Clear existing content
+
+                // Iterate through doctors and render each one
+                doctors.forEach(doctor => {
+                    const card = document.createElement('div');
+                    card.className = 'doctor-card';
+                    const doctorId = doctor.doctorId;
+                    card.innerHTML = `
+                        <img alt="${doctor.name} profile" height="80" src="${doctor.imageUrl}" width="80" />
+                        <div class="doctor-info">
+                            <h2>${doctor.name}</h2>
+                            <p>${doctor.profession}</p>
+                            <p>${doctor.experience} years experience</p>
+                            <p>${doctor.clinic}, ${doctor.location}</p>
+                            <p>₹${doctor.fees} Consultation Fees</p>
+                            <div class="rating">
+                                <i class="fas fa-thumbs-up"></i>
+                                <span>${doctor.ratings}%</span>
+                                <a href="#">${doctor.reviews} Reviews</a>
+                            </div>
+                            <p>${doctor.patients} Patients Treated</p>
+                            <button class="book-button enabled">Book Appointment</button>
+                        </div>
+                    `;
+                        
+                   // Add event listener to the "Book Appointment" button
+            const bookButton = card.querySelector('.book-button');
+            bookButton.addEventListener('click', function () {
+                if (this.classList.contains('enabled')) {
+                    // Encode the doctor's name safely for the URL
+                    const doctorId = encodeURIComponent(doctor.doctorId);
+                    // Redirect to the slots2.html page with the doctorName as a URL parameter
+                    window.location.href = `/mini/vcard/slots2.html?DocId=${encodeURIComponent(doctorId)}`;
+                } else {
+                    console.log('Booking button is disabled.');
+                }
+            });
+
+
+
+                    doctorList.appendChild(card);
+                });
+            } catch (error) {
+                console.error("Error fetching doctors:", error);
+                const doctorList = document.getElementById('doctor-list');
+                doctorList.innerHTML = '<p>Failed to load doctor data.</p>';
+            }
+        }
+
+        // Fetch and render doctors on page load
+        fetchDoctors();
+
+
+
+
+       
+    </script>
+    <script src="server.js"></script>
+</body>
+
+</html>

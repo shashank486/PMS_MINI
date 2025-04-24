@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        /* General body styling */
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #63a4ff, #c1c8e4); /* Gradient background */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column; /* Stack logo and container vertically */
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #333;
+        }
+    
+        /* Logo styling */
+        #logo {
+            margin-bottom: 20px; /* Space below the logo */
+            width: 150px; /* Adjust the size of the logo */
+            height: auto;
+            max-width: 100%;
+            border: 1px solid black;
+            border-radius: 100px;
+            animation: fadeIn 1s ease-in-out; /* Subtle fade-in animation */
+        }
+    
+        /* Container for the form */
+        .container {
+            background-color: #fff;
+            padding: 30px 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+        }
+    
+        /* Heading inside the form */
+        h2 {
+            margin: 0 0 20px;
+            font-size: 24px;
+            color: #4a4a4a;
+        }
+    
+        /* Input fields styling */
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 12px 15px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 16px;
+            background-color: #f9f9f9;
+            transition: border-color 0.3s ease;
+        }
+    
+        input[type="text"]:focus,
+        input[type="password"]:focus {
+            border-color: #6c63ff;
+            outline: none;
+            background-color: #fff;
+        }
+    
+        /* Login button styling */
+        button {
+            background-color: #6397ff;
+            color: white;
+            padding: 12px 20px;
+            margin: 15px 0;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+    
+        button:hover {
+            background-color: #4f85f1;
+        }
+    
+        /* Forgot password link styling */
+        a {
+            color: #6397ff;
+            text-decoration: none;
+            font-size: 14px;
+            margin-top: 10px;
+            display: block;
+            transition: color 0.3s ease;
+        }
+    
+        a:hover {
+            color: #6397ff;
+        }
+    
+        /* Responsive adjustments for smaller screens */
+        @media (max-width: 500px) {
+            .container {
+                padding: 20px;
+            }
+    
+            button {
+                padding: 10px;
+            }
+    
+            input[type="text"],
+            input[type="password"] {
+                padding: 10px;
+            }
+        }
+    
+        /* Subtle fade-in animation for logo */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+    
+    
+</head>
+
+<body>
+   <img src="https://res.cloudinary.com/dviuu2srn/image/upload/v1732110862/logo_PMS_iwjig9.webp" id="logo" alt="">
+    <div class="container">
+        <h2>Login</h2>
+        <form id="loginForm" action="/login" method="POST">
+            <input type="hidden" name="userId" value="">
+            <div>
+                <label for="mobileEmail">Mobile Number / Email ID:</label>
+                <input type="text" id="mobileEmail" placeholder="Enter Mobile Number / Email ID" required>
+            </div>
+            <div>
+                <label for="password">Password:</label>
+                <input type="password" id="password" placeholder="Enter Password" required>
+            </div>
+            <button type="submit" class="loginbtn">Login</button>
+            <a href="#">Forgot password?</a>
+        </form>
+    </div>
+    <script>
+ document.getElementById('loginForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const mobileno = document.getElementById('mobileEmail').value;
+            const password = document.getElementById('password').value;
+
+            const response = await fetch('http://localhost:5503/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ mobileno, password }),
+            });
+
+            const data = await response.json();
+            console.log(data);
+
+            const loginButton = document.querySelector('.loginbtn');
+            if (response.ok) {
+                loginButton.addEventListener('click', function () {
+                    sessionStorage.setItem('authenticated', 'true');
+
+                    localStorage.setItem('doctorname', data.doctorname || ''); // Store doctorname or an empty string as fallback
+                    // const doctorname = encodeURIComponent(data.fullname);
+                    // const redirectUrl = data.redirect;
+
+                    // Log the final URL to verify it's correct
+                    // console.log(`Redirecting to: ${redirectUrl}?doctorname=${doctorname}`);
+
+                    // Redirect to the new page with userId as a URL parameter
+                    // window.location.href = `${redirectUrl}?doctorname=${doctorname}`;
+                    // Redirect to the appropriate page
+                    window.location.href = data.redirect;
+
+                });
+            }
+        });
+
+
+
+    </script>
+
+</body>
+
+</html> 
